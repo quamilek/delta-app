@@ -12,14 +12,16 @@ services:
       - ./.env.dev
     depends_on:
       - db
+    stdin_open: true
+    tty: true
   db:
     image: postgres:15
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_USER=hello_django
-      - POSTGRES_PASSWORD=hello_django
-      - POSTGRES_DB=hello_django_dev
+      - POSTGRES_USER=delta
+      - POSTGRES_PASSWORD=delta
+      - POSTGRES_DB=delta_dev
 
 volumes:
   postgres_data:
