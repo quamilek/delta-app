@@ -20,7 +20,7 @@ class Project(models.Model):
 
 
 class ProjectElement(models.Model):
-    project_name = models.ForeignKey(Project, on_delete=models.PROTECT)
+    project = models.ForeignKey(Project, on_delete=models.PROTECT)
     ref = models.CharField(max_length=255, unique=True)
     tq_pr = models.CharField(max_length=255)
     project_name = models.CharField(max_length=255)
@@ -34,21 +34,21 @@ class ProjectElement(models.Model):
     ppc_side = models.CharField(max_length=255, blank=True, null=True)
     height = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     width = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    qty = models.PositiveIntegerField(blank=True, null=True)
+    qty = models.IntegerField( blank=True, null=True)
     total_lm = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     total_m2 = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
 
     # Additional fields with same structure as above but differentiated by '.1' suffix
     height_1 = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     width_1 = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    qty_1 = models.PositiveIntegerField(blank=True, null=True)
+    qty_1 = models.IntegerField( blank=True, null=True)
     total_lm_1 = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     total_m2_1 = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
 
     unit = models.CharField(max_length=255, blank=True, null=True)
     thickness = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     type = models.CharField(max_length=255, blank=True, null=True)
-    welds = models.BooleanField(default=False)
+    welds = models.CharField(max_length=255, blank=True, null=True)
     comments = models.TextField(blank=True, null=True)
     weight = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     phase = models.CharField(max_length=255, blank=True, null=True)

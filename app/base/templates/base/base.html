@@ -57,15 +57,9 @@
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             {% block sidebar %}
                 <li class="nav-item">
-                  <a href="pages/examples/invoice.html" class="nav-link">
+                  <a href="{% url 'projects' %}" class="nav-link">
                     <i class="nav-icon fas fa-book"></i>
                     <p>Zamówienia</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="pages/examples/invoice.html" class="nav-link">
-                    <i class="nav-icon fas fa-box"></i>
-                    <p>palety</p>
                   </a>
                 </li>
             {% endblock %}
@@ -84,7 +78,19 @@
         </div><!-- /.container-fluid -->
       </div>
       <!-- /.content-header -->
-  
+  {% block alert %}
+    {% if messages %}
+      <div class="card-body">
+        {% for message in messages %}
+        <div class="alert alert-{% if message.tags %}{{ message.tags }}"{% endif %} alert-dismissible">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+          <h5><i class="icon fas fa-exclamation-triangle"></i> Alert!</h5>
+          {{ message }}
+        </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+ {% endblock %}
       <!-- Main content -->
       {% block content %}
       {% endblock %}
