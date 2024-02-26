@@ -26,11 +26,6 @@ class ProjectsView(LoginRequiredMixin, View):
 class ProjectView(LoginRequiredMixin, View):
     template_name = "project.html"
 
-    @login_required
-    def dispatch(self, request, *args, **kwargs):
-        # Your view logic here
-        pass
-
     def get(self, request, *args, **kwargs):
 
         project_id = kwargs.get('id')

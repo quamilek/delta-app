@@ -5,9 +5,15 @@ from django.conf.urls.static import static
 
 from projects.views.views import import_project
 from projects.views.projects import ProjectView, ProjectsView
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
     # path("/", ProjectsView.as_view(), name='projects'),
+    path(
+        "",
+        RedirectView.as_view(url="projects"),
+        name="home-page",
+    ),
     path("admin/", admin.site.urls),
     path("accounts/", include("django.contrib.auth.urls")),  
 

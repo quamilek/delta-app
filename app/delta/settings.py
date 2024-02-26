@@ -148,3 +148,52 @@ MESSAGE_TAGS = {
     message_constants.WARNING: "warning",
     message_constants.ERROR: "danger",
 }
+
+LOGGING = {
+    'version': 1,
+    'formatters': {
+        'verbose': {
+            'format': '{asctime} {levelname} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'error_file': {
+            'class': 'logging.FileHandler',
+            'filename': 'deltaapp-error.log',
+            'level': 'ERROR',
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['error_file'],
+            'level': 'INFO',  # Adjust this as needed
+            'propagate': True,
+        },
+        'app': {  # Replace with your app's name
+            'handlers': ['error_file'],
+            'level': 'DEBUG',  # Adjust this as needed
+            'propagate': True,
+        },
+        'delta': {  # Replace with your app's name
+            'handlers': ['error_file'],
+            'level': 'DEBUG',  # Adjust this as needed
+            'propagate': True,
+        },
+        'upload': {  # Replace with your app's name
+            'handlers': ['error_file'],
+            'level': 'DEBUG',  # Adjust this as needed
+            'propagate': True,
+        },
+        'projects': {  # Replace with your app's name
+            'handlers': ['error_file'],
+            'level': 'DEBUG',  # Adjust this as needed
+            'propagate': True,
+        },
+    },
+}
