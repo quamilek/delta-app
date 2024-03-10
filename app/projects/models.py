@@ -21,7 +21,7 @@ class Project(models.Model):
 
 class ProjectElement(models.Model):
     project = models.ForeignKey(Project, on_delete=models.PROTECT)
-    ref = models.CharField(max_length=255, unique=True)
+    ref = models.CharField(max_length=255)
     tq_pr = models.CharField(max_length=255)
     project_name = models.CharField(max_length=255)
     product = models.CharField(max_length=255)
@@ -59,3 +59,4 @@ class ProjectElement(models.Model):
     
     class Meta:
         app_label  = 'projects'
+        # unique_together = ('project_name', 'ref', 'tq_pr')

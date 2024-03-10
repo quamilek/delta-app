@@ -7,6 +7,10 @@ import pandas as pd
 from projects.forms import ImportProjectForm
 from projects.models import ProjectElement, Project
 from django.contrib import messages
+from django.utils.html import mark_safe
+import logging
+
+logger = logging.getLogger(__name__)  # Use __name__ for automatic namespacing
 
 
 @login_required
@@ -20,7 +24,13 @@ def import_project(request):
             # save file in storage
             filename = fs.save(project_file.name, project_file)
         
-            file_data = pd.read_excel(project_file, skiprows=1)
+            try:
+                file_data = pd.read_excel(project_file, skiprows=1)
+            except ValueError as e:
+                logger.exception(e)
+                messages.add_message(request, messages.ERROR, mark_safe(f"Wystąpił błąd podczas odczytywania pliku </br>\nERROR: {e}"))
+                return render(request, 'upload.html', {'form': form})
+                
 
             project_name = get_project_name_form_file(file_data)
             
@@ -50,11 +60,14 @@ def import_project(request):
 
 
 def get_project_name_form_file(file_data): 
-    return file_data.head()['Project Name'][1]
+    project_name = file_data.head()['Project Name'][1] + ' ' + file_data.head()['TQ/PR'][1]
+    return project_name
 
 def create_project_elements_from_file_data(file_data, project_obj):
     # bez ostatniego wiersza bo tam jest sumowanie
-    for row_dict in file_data[:-1].to_dict(orient="records"):
+    data = file_data[~file_data['TQ/PR'].isna()]
+
+    for row_dict in data.to_dict(orient="records"):
         row_lowercase = {transform_table_column_name(k.lower()): v for k, v in row_dict.items()}
         
     
